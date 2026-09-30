@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>NextFairway App · Duell-Bilanz</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<style>
+h2{text-transform:uppercase}
+body{margin:0;background:#EDEDEA;font-family:'Barlow',system-ui,sans-serif;color:#111111}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.nf-scroll{scrollbar-width:none}.nf-scroll::-webkit-scrollbar{display:none}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #F5F5F2; overflow: hidden; font-family: 'Barlow', system-ui, sans-serif; color: #111111">
+
+<div style="flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 48px 12px 4px">
+<a href="07-mitgliedsprofil.html" aria-label="Zurück zum Profil" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<div style="font-size: 15px; font-weight: 700">Duell-Bilanz</div>
+</div>
+
+<div class="nf-scroll" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding: 8px 20px 32px">
+
+<section style="display: flex; flex-direction: column; gap: 16px; padding: 20px; background: #111111; border-radius: 22px; color: #FFFFFF">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 96px">
+<div style="width: 56px; height: 56px; border-radius: 28px; background: #D6D6D1; color: #111111; display: flex; align-items: center; justify-content: center; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 22px; font-weight: 700">Du</div>
+<div style="font-size: 13px; font-weight: 600">Du</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+<div style="font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 44px; font-weight: 700; line-height: 1">{{wins}} : {{losses}}</div>
+<div style="font-size: 13px; color: #CFCFCF">{{drawText}}</div>
+</div>
+<a href="07-mitgliedsprofil.html" style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 96px">
+<div style="width: 56px; height: 56px; border-radius: 28px; background: #D6D6D1; color: #111111; display: flex; align-items: center; justify-content: center; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 22px; font-weight: 700">M</div>
+<div style="font-size: 13px; font-weight: 600">[Freund]</div>
+</a>
+</div>
+<div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: #2A2A2A">
+<div style="{{barWin}}"></div><div style="{{barDraw}}"></div><div style="{{barLoss}}"></div>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #CFCFCF">
+<span>{{total}} Runden gegeneinander</span><span>{{leadText}}</span>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 19px; font-weight: 700">Nach Spielform</h2>
+<div style="display: flex; flex-direction: column; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E4E0; padding: 4px 16px">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 10px 0; font-size: 12px; font-weight: 700; color: #5C5C5C; border-bottom: 1px solid #EDEDEA">
+<span style="grid-column: span 1">Form</span><span style="text-align: center">Siege</span><span style="text-align: center">Remis</span><span style="text-align: center">Niederl.</span>
+</div>
+<sc-for list="{{byFormat}}" as="f" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 12px 0; font-size: 15px; border-bottom: 1px solid #F5F5F2">
+<span style="font-weight: 600">{{f.label}}</span><span style="text-align: center; font-weight: 700; color: #111111">{{f.w}}</span><span style="text-align: center">{{f.d}}</span><span style="text-align: center; color: #B42318">{{f.l}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<sc-if value="{{notAdding}}" hint-placeholder-val="{{ true }}">
+<button onClick="{{startAdd}}" style="min-height: 50px; border-radius: 14px; border: none; background: {{accent}}; color: #FFFFFF; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Runde eintragen</button>
+</sc-if>
+
+<sc-if value="{{adding}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 12px; padding: 18px; background: #FFFFFF; border-radius: 18px; border: 1px solid #E4E4E0">
+<div style="font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 18px; font-weight: 700">Neue Runde eintragen</div>
+<label for="nf-m-opp" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Gegen wen hast du gespielt?</label>
+<select id="nf-m-opp" value="{{fOpp}}" onChange="{{onOpp}}" style="height: 46px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 15px; font-family: inherit; color: #111111; outline-color: #111111">
+<option value="[Freund]">[Freund]</option>
+<option value="[Freund 2]">[Freund 2]</option>
+<option value="[Freund 3]">[Freund 3]</option>
+</select>
+<div style="font-size: 13px; font-weight: 700; color: #5C5C5C">Spielform</div>
+<div role="group" aria-label="Spielform" style="display: flex; gap: 8px">
+<sc-for list="{{formatChips}}" as="c" hint-placeholder-count="3">
+<button onClick="{{c.pick}}" aria-pressed="{{c.active}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 13px; font-weight: 700; color: #5C5C5C">Wer hat gewonnen?</div>
+<div role="group" aria-label="Ergebnis" style="display: flex; gap: 8px">
+<sc-for list="{{resultChips}}" as="c" hint-placeholder-count="3">
+<button onClick="{{c.pick}}" aria-pressed="{{c.active}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+<label for="nf-m-score" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Ergebnis (optional)</label>
+<input id="nf-m-score" type="text" placeholder="{{scoreHint}}" value="{{fScore}}" onChange="{{onScore}}" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 14px; font-size: 15px; outline-color: #111111">
+<div style="display: flex; gap: 8px">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px">
+<label for="nf-m-date" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Datum</label>
+<input id="nf-m-date" type="date" value="{{fDate}}" onChange="{{onDate}}" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 10px; font-size: 14px; outline-color: #111111">
+</div>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px">
+<label for="nf-m-course" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Golfplatz</label>
+<input id="nf-m-course" type="text" value="{{fCourse}}" onChange="{{onCourse}}" style="height: 44px; min-width: 0; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 14px; outline-color: #111111">
+</div>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: 12px; background: #EEF3DC; font-size: 13px; line-height: 1.45; color: #111111">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+<span>{{fOpp}} sieht die Runde beim nächsten Öffnen der App im Postfach und bestätigt mit einem Tipp. Mehr muss dein Gegner nicht tun.</span>
+</div>
+<div style="display: flex; gap: 8px; justify-content: flex-end">
+<button onClick="{{cancel}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid #D6D6D1; background: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">Abbrechen</button>
+<button onClick="{{save}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: none; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">Eintragen</button>
+</div>
+</section>
+</sc-if>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 19px; font-weight: 700">Alle Runden</h2>
+<sc-for list="{{history}}" as="m" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E4E0">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 3px; min-width: 0">
+<div style="font-size: 12px; font-weight: 700; color: #111111">{{m.formatLabel}}</div>
+<div style="font-size: 15px; font-weight: 600">{{m.course}}</div>
+<div style="font-size: 13px; color: #5C5C5C">{{m.date}} · {{m.score}}</div>
+</div>
+<div style="{{m.pillStyle}}">{{m.resultLabel}}</div>
+</div>
+<sc-if value="{{m.pending}}" hint-placeholder-val="{{ false }}">
+<a href="12-postfach.html" style="display: flex; align-items: center; gap: 6px; min-height: 32px; font-size: 12px; font-weight: 600; color: #7A5A12">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path></svg>
+Liegt im Postfach von {{m.opp}}, wartet auf Bestätigung</a>
+</sc-if>
+</div>
+</sc-for>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5E17EB","options":["#5E17EB","#111111"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      adding: false, fOpp: '[Freund]', fFormat: 'mp', fResult: '', fScore: '', fDate: '', fCourse: '',
+      matches: [
+        { format: 'mp', result: 'w', course: '[Golfclub]', date: '[Datum]', score: '[Ergebnis]', pending: false },
+        { format: 'sf', result: 'l', course: '[Golfclub]', date: '[Datum]', score: '[Ergebnis]', pending: false },
+        { format: 'zs', result: 'w', course: '[Golfclub]', date: '[Datum]', score: '[Ergebnis]', pending: false },
+        { format: 'mp', result: 'd', course: '[Golfclub]', date: '[Datum]', score: '[Ergebnis]', pending: false },
+        { format: 'sf', result: 'w', course: '[Golfclub]', date: '[Datum]', score: '[Ergebnis]', pending: false }
+      ]
+    };
+  }
+  fmt(d) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || '');
+    return m ? m[3] + '.' + m[2] + '.' + m[1] : '[Datum]';
+  }
+  chipStyle(on) {
+    return 'flex-grow: 1; min-height: 44px; padding: 0 8px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; ' +
+      (on ? 'background: #111111; color: #FFFFFF; border: 1px solid #111111' : 'background: #F5F5F2; color: #111111; border: 1px solid #D6D6D1');
+  }
+  renderVals() {
+    var self = this;
+    var labels = { mp: 'Matchplay', zs: 'Zählspiel', sf: 'Stableford' };
+    var hints = { mp: 'z. B. 3&2', zs: 'z. B. 84 : 88 Schläge', sf: 'z. B. 36 : 32 Punkte' };
+    var confirmed = this.state.matches.filter(function (m) { return !m.pending; });
+    var count = function (list, r) { return list.filter(function (m) { return m.result === r; }).length; };
+    var w = count(confirmed, 'w'), d = count(confirmed, 'd'), l = count(confirmed, 'l');
+    var total = w + d + l;
+    var pct = function (x) { return total ? (x / total * 100).toFixed(1) : 0; };
+    var byFormat = ['mp', 'zs', 'sf'].map(function (f) {
+      var ms = confirmed.filter(function (m) { return m.format === f; });
+      return { label: labels[f], w: count(ms, 'w'), d: count(ms, 'd'), l: count(ms, 'l') };
+    });
+    var resLabel = { w: 'Sieg', d: 'Remis', l: 'Niederlage' };
+    var pill = {
+      w: 'background: #111111; color: #FFFFFF',
+      d: 'background: #EDEDEA; color: #111111',
+      l: 'background: #FDE7E4; color: #B42318'
+    };
+    var history = this.state.matches.slice().reverse().map(function (m) {
+      return {
+        formatLabel: labels[m.format].toUpperCase(), course: m.course, date: m.date, score: m.score || 'ohne Ergebnis',
+        resultLabel: resLabel[m.result], pending: m.pending, opp: m.opp || '[Freund]',
+        pillStyle: 'flex-shrink: 0; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; ' + pill[m.result] + (m.pending ? '; opacity: 0.6' : '')
+      };
+    });
+    var formatChips = ['mp', 'zs', 'sf'].map(function (f) {
+      return { label: labels[f], active: f === self.state.fFormat ? 'true' : 'false', style: self.chipStyle(f === self.state.fFormat),
+        pick: function () { self.setState({ fFormat: f }); } };
+    });
+    var resultChips = [{ id: 'w', label: 'Ich' }, { id: 'd', label: 'Remis' }, { id: 'l', label: this.state.fOpp }].map(function (r) {
+      return { label: r.label, active: r.id === self.state.fResult ? 'true' : 'false', style: self.chipStyle(r.id === self.state.fResult),
+        pick: function () { self.setState({ fResult: r.id }); } };
+    });
+    var lead = w > l ? 'Du führst' : (l > w ? '[Freund] führt' : 'Ausgeglichen');
+    return {
+      accent: this.props.accent ?? '#5E17EB',
+      wins: w, losses: l, total: total,
+      drawText: d + (d === 1 ? ' Remis' : ' Remis'),
+      leadText: lead,
+      barWin: 'width: ' + pct(w) + '%; background: #A6BF59',
+      barDraw: 'width: ' + pct(d) + '%; background: #EDEDEA',
+      barLoss: 'width: ' + pct(l) + '%; background: #8A5CF5',
+      byFormat: byFormat, history: history,
+      formatChips: formatChips, resultChips: resultChips,
+      scoreHint: hints[this.state.fFormat],
+      fScore: this.state.fScore, fDate: this.state.fDate, fCourse: this.state.fCourse,
+      adding: this.state.adding, notAdding: !this.state.adding,
+      fOpp: this.state.fOpp,
+      onOpp: function (e) { self.setState({ fOpp: e.target.value }); },
+      onScore: function (e) { self.setState({ fScore: e.target.value }); },
+      onDate: function (e) { self.setState({ fDate: e.target.value }); },
+      onCourse: function (e) { self.setState({ fCourse: e.target.value }); },
+      startAdd: function () { self.setState({ adding: true }); },
+      cancel: function () { self.setState({ adding: false, fResult: '', fScore: '', fDate: '', fCourse: '' }); },
+      save: function () {
+        if (!self.state.fResult) return;
+        self.setState({
+          adding: false, fResult: '', fScore: '', fDate: '', fCourse: '',
+          matches: self.state.matches.concat([{
+            format: self.state.fFormat, result: self.state.fResult, opp: self.state.fOpp,
+            course: (self.state.fCourse || '').trim() || '[Golfclub]',
+            date: self.fmt(self.state.fDate), score: (self.state.fScore || '').trim(), pending: true
+          }])
+        });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

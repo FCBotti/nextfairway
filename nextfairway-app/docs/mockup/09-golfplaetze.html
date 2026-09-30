@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>NextFairway App · Golfplätze</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<style>
+h2{text-transform:uppercase}
+body{margin:0;background:#EDEDEA;font-family:'Barlow',system-ui,sans-serif;color:#111111}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.nf-scroll{scrollbar-width:none}.nf-scroll::-webkit-scrollbar{display:none}
+button,input,select{font-family:inherit}
+.nf-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; display: flex; flex-direction: column; background: #F5F5F2; overflow: hidden; font-family: 'Barlow', system-ui, sans-serif; color: #111111">
+
+<div style="flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 48px 12px 4px">
+<a href="05-community.html" aria-label="Zurück zur Community" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<div style="font-size: 15px; font-weight: 700">Community</div>
+</div>
+
+<div class="nf-scroll" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding: 4px 20px 110px">
+<header style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 30px; font-weight: 700">Golfplätze</h1>
+<div style="font-size: 14px; color: #5C5C5C">Von der Community eingetragen, von NextFairway gepflegt</div>
+</header>
+
+<div style="display: flex; gap: 8px">
+<label for="nf-course-search" class="nf-sr">Golfplätze durchsuchen</label>
+<input id="nf-course-search" type="search" placeholder="Platz oder Ort suchen" value="{{query}}" onChange="{{onQuery}}" style="flex-grow: 1; min-width: 0; height: 46px; border-radius: 14px; border: 1px solid #D6D6D1; background: #FFFFFF; padding: 0 16px; font-size: 15px; color: #111111; outline-color: #111111">
+<button onClick="{{toggleFilters}}" aria-expanded="{{filtersExpanded}}" aria-label="Weitere Filter" style="flex-shrink: 0; width: 46px; height: 46px; border-radius: 14px; border: 1px solid #D6D6D1; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #111111">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg></button>
+</div>
+
+<div class="nf-scroll" style="display: flex; gap: 8px; overflow-x: auto">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="5">
+<button onClick="{{c.pick}}" aria-pressed="{{c.active}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{filtersOpen}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E4E0">
+<label for="nf-f-region" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Bundesland oder Region</label>
+<select id="nf-f-region" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 15px; color: #111111">
+<option>Alle Regionen</option><option>Nordrhein-Westfalen</option><option>Bayern</option><option>Österreich</option><option>Schweiz</option>
+</select>
+<label for="nf-f-fee" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Greenfee</label>
+<select id="nf-f-fee" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 15px; color: #111111">
+<option>Egal</option><option>bis 50 €</option><option>bis 80 €</option><option>bis 120 €</option>
+</select>
+<label for="nf-f-sort" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Sortieren nach</label>
+<select id="nf-f-sort" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 15px; color: #111111">
+<option>Beste Bewertung</option><option>Meiste Bewertungen</option><option>Entfernung</option><option>Greenfee aufsteigend</option>
+</select>
+</div>
+</sc-if>
+
+<div style="font-size: 13px; font-weight: 600; color: #5C5C5C">{{resultText}}</div>
+
+<sc-if value="{{adding}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; background: #FFFFFF; border-radius: 18px; border: 1px solid #E4E4E0">
+<div style="font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 19px; font-weight: 700">Platz eintragen</div>
+
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #111111; padding-top: 4px">GRUNDDATEN</div>
+<label for="nf-c-name" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Name des Golfclubs</label>
+<input id="nf-c-name" type="text" value="{{fName}}" onChange="{{onName}}" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 14px; font-size: 15px; outline-color: #111111">
+<div style="display: flex; gap: 8px">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0"><label for="nf-c-city" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Ort</label>
+<input id="nf-c-city" type="text" value="{{fCity}}" onChange="{{onCity}}" style="height: 44px; min-width: 0; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 15px; outline-color: #111111"></div>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0"><label for="nf-c-region" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Region</label>
+<select id="nf-c-region" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 8px; font-size: 14px"><option>NRW</option><option>Bayern</option><option>Österreich</option><option>Schweiz</option></select></div>
+</div>
+
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #111111; padding-top: 6px">PLATZ</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="nf-c-holes" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Löcher</label>
+<select id="nf-c-holes" value="{{fHoles}}" onChange="{{onHoles}}" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 8px; font-size: 15px"><option value="18">18</option><option value="9">9</option><option value="27">27</option></select></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="nf-c-par" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Par</label>
+<input id="nf-c-par" type="text" inputmode="numeric" placeholder="72" style="height: 44px; min-width: 0; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 10px; font-size: 15px"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="nf-c-len" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Länge (m)</label>
+<input id="nf-c-len" type="text" inputmode="numeric" placeholder="6000" style="height: 44px; min-width: 0; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 10px; font-size: 15px"></div>
+</div>
+
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #111111; padding-top: 6px">GREENFEE</div>
+<div style="display: flex; gap: 8px">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0"><label for="nf-c-feew" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Wochentag (€)</label>
+<input id="nf-c-feew" type="text" inputmode="decimal" style="height: 44px; min-width: 0; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 15px"></div>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0"><label for="nf-c-feee" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Wochenende (€)</label>
+<input id="nf-c-feee" type="text" inputmode="decimal" style="height: 44px; min-width: 0; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 12px; font-size: 15px"></div>
+</div>
+
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #111111; padding-top: 6px">LINKS</div>
+<label for="nf-c-url" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Website</label>
+<input id="nf-c-url" type="url" placeholder="https://" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 14px; font-size: 15px">
+<label for="nf-c-member" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Seite zu Mitgliedschaften</label>
+<input id="nf-c-member" type="url" placeholder="https://" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 14px; font-size: 15px">
+<label for="nf-c-score" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Scorecard (Link zur Website)</label>
+<input id="nf-c-score" type="url" placeholder="https://" style="height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 0 14px; font-size: 15px">
+
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #111111; padding-top: 6px">FOTOS VOM PLATZ</div>
+<div style="display: flex; gap: 8px">
+<button aria-label="Foto hinzufügen" style="width: 72px; height: 72px; border-radius: 12px; border: 1.5px dashed #A0A0A0; background: #F5F5F2; color: #111111; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+<div style="display: flex; align-items: center; font-size: 13px; color: #5C5C5C">Bis zu 5 eigene Fotos</div>
+</div>
+
+<div style="margin-top: 4px; padding: 12px; border-radius: 12px; background: #EEF3DC; font-size: 13px; line-height: 1.45; color: #111111">Dein Eintrag ist sofort sichtbar und wird vom NextFairway-Team geprüft.</div>
+<div style="display: flex; gap: 8px; justify-content: flex-end">
+<button onClick="{{cancel}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid #D6D6D1; background: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">Abbrechen</button>
+<button onClick="{{save}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: none; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">Eintragen</button>
+</div>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{courses}}" as="c" hint-placeholder-count="4">
+<a href="10-golfplatz-detail.html" style="display: flex; flex-direction: column; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E4E0; overflow: hidden">
+<div style="position: relative; height: 96px; background: #DDE6BF; display: flex; align-items: center; justify-content: center; color: #111111">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-9 9"></path></svg>
+<div style="{{c.badgeStyle}}">{{c.badge}}</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 5px; padding: 12px 14px 14px">
+<div style="display: flex; justify-content: space-between; gap: 10px">
+<div style="font-size: 16px; font-weight: 700">{{c.name}}</div>
+<div style="flex-shrink: 0; display: flex; align-items: center; gap: 4px; font-size: 13px">
+<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="{{c.starFill}}" stroke="#A0741A" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+<span style="font-weight: 700">{{c.avgText}}</span><span style="color: #5C5C5C">{{c.countText}}</span>
+</div>
+</div>
+<div style="font-size: 13px; color: #5C5C5C">{{c.city}}</div>
+<div style="font-size: 13px; font-weight: 600; color: #333333">{{c.facts}}</div>
+</div>
+</a>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{notAdding}}" hint-placeholder-val="{{ true }}">
+<button onClick="{{startAdd}}" style="position: absolute; right: 20px; bottom: 104px; height: 52px; padding: 0 20px 0 16px; border-radius: 26px; border: none; background: {{accent}}; color: #FFFFFF; display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; box-shadow: 0 6px 18px rgba(0,0,0,0.25); cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Platz eintragen</button>
+</sc-if>
+
+<nav aria-label="Hauptnavigation" style="flex-shrink: 0; display: flex; justify-content: space-around; padding: 8px 8px 26px; background: #FFFFFF; border-top: 1px solid #DEDED9">
+<a href="02-start.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 76px; padding: 6px 0; font-size: 12px; font-weight: 600; color: #666666">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Start</a>
+<a href="04-mediathek.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 76px; padding: 6px 0; font-size: 12px; font-weight: 600; color: #666666">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M10 9l5 3-5 3z"></path></svg>Mediathek</a>
+<a href="05-community.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 76px; padding: 6px 0; font-size: 12px; font-weight: 700; color: #111111">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>Community</a>
+<a href="08-mein-profil.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 76px; padding: 6px 0; font-size: 12px; font-weight: 600; color: #666666">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>Profil</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5E17EB","options":["#5E17EB","#111111"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: '', filters: {}, filtersOpen: false, adding: false, fName: '', fCity: '', fHoles: '18',
+      courses: [
+        { name: '[Golfclub-Name]', city: '[Ort], NRW', holes: 18, ratings: [0, 1, 3, 7, 12], verified: true, scorecard: true },
+        { name: '[Golfclub-Name]', city: '[Ort], Bayern', holes: 18, ratings: [1, 2, 6, 9, 4], verified: true, scorecard: false },
+        { name: '[Golfclub-Name]', city: '[Ort], NRW', holes: 9, ratings: [0, 0, 1, 2, 5], verified: false, scorecard: true },
+        { name: '[Golfclub-Name]', city: '[Ort], Österreich', holes: 27, ratings: [2, 3, 5, 3, 1], verified: true, scorecard: true }
+      ]
+    };
+  }
+  stats(r) {
+    var n = 0, sum = 0;
+    for (var i = 0; i < 5; i++) { n += r[i]; sum += r[i] * (i + 1); }
+    return { n: n, avg: n ? sum / n : 0 };
+  }
+  renderVals() {
+    var self = this;
+    var f = this.state.filters;
+    var defs = [
+      { id: 'h18', label: '18 Loch' }, { id: 'h9', label: '9 Loch' },
+      { id: 'top', label: '4+ Sterne' }, { id: 'score', label: 'Mit Scorecard' }, { id: 'checked', label: 'Geprüft' }
+    ];
+    var chips = defs.map(function (d) {
+      var on = !!f[d.id];
+      return {
+        label: d.label, active: on ? 'true' : 'false',
+        style: 'flex-shrink: 0; min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; ' +
+          (on ? 'background: #111111; color: #FFFFFF; border: 1px solid #111111' : 'background: #FFFFFF; color: #111111; border: 1px solid #D6D6D1'),
+        pick: function () { var nf = Object.assign({}, self.state.filters); nf[d.id] = !nf[d.id]; self.setState({ filters: nf }); }
+      };
+    });
+    var q = (this.state.query || '').toLowerCase();
+    var list = this.state.courses.map(function (c) {
+      var s = self.stats(c.ratings);
+      return Object.assign({}, c, { n: s.n, avg: s.avg });
+    }).filter(function (c) {
+      if (q && (c.name + ' ' + c.city).toLowerCase().indexOf(q) < 0) return false;
+      if (f.h18 && !f.h9 && c.holes !== 18) return false;
+      if (f.h9 && !f.h18 && c.holes !== 9) return false;
+      if (f.top && c.avg < 4) return false;
+      if (f.score && !c.scorecard) return false;
+      if (f.checked && !c.verified) return false;
+      return true;
+    }).sort(function (a, b) { return b.avg - a.avg; }).map(function (c) {
+      return {
+        name: c.name, city: c.city,
+        avgText: c.n ? c.avg.toFixed(1).replace('.', ',') : 'Neu',
+        countText: c.n ? '(' + c.n + ')' : '',
+        starFill: c.n ? '#D9A62B' : 'none',
+        facts: c.holes + ' Loch · Par [Par] · [Länge] m · Greenfee ab [Betrag] €',
+        badge: c.verified ? 'Geprüft' : 'In Prüfung',
+        badgeStyle: 'position: absolute; left: 10px; top: 10px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; ' +
+          (c.verified ? 'background: #111111; color: #FFFFFF' : 'background: #FFF4D6; color: #7A5A12')
+      };
+    });
+    return {
+      accent: this.props.accent ?? '#5E17EB',
+      chips: chips, courses: list,
+      resultText: list.length + (list.length === 1 ? ' Platz gefunden' : ' Plätze gefunden'),
+      query: this.state.query, onQuery: function (e) { self.setState({ query: e.target.value }); },
+      filtersOpen: this.state.filtersOpen, filtersExpanded: this.state.filtersOpen ? 'true' : 'false',
+      toggleFilters: function () { self.setState({ filtersOpen: !self.state.filtersOpen }); },
+      adding: this.state.adding, notAdding: !this.state.adding,
+      fName: this.state.fName, fCity: this.state.fCity, fHoles: this.state.fHoles,
+      onName: function (e) { self.setState({ fName: e.target.value }); },
+      onCity: function (e) { self.setState({ fCity: e.target.value }); },
+      onHoles: function (e) { self.setState({ fHoles: e.target.value }); },
+      startAdd: function () { self.setState({ adding: true }); },
+      cancel: function () { self.setState({ adding: false, fName: '', fCity: '' }); },
+      save: function () {
+        var n = (self.state.fName || '').trim();
+        if (!n) return;
+        self.setState({
+          adding: false, fName: '', fCity: '',
+          courses: self.state.courses.concat([{ name: n, city: (self.state.fCity || '').trim() || '[Ort]', holes: parseInt(self.state.fHoles, 10), ratings: [0, 0, 0, 0, 0], verified: false, scorecard: false }])
+        });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

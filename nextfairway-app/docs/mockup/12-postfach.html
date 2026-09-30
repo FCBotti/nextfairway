@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>NextFairway App · Postfach</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<style>
+h2{text-transform:uppercase}
+body{margin:0;background:#EDEDEA;font-family:'Barlow',system-ui,sans-serif;color:#111111}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.nf-scroll{scrollbar-width:none}.nf-scroll::-webkit-scrollbar{display:none}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #F5F5F2; overflow: hidden; font-family: 'Barlow', system-ui, sans-serif; color: #111111">
+
+<div style="flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 48px 12px 4px">
+<a href="02-start.html" aria-label="Zurück zur Startseite" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<div style="font-size: 15px; font-weight: 700">Start</div>
+</div>
+
+<div class="nf-scroll" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 22px; padding: 4px 20px 32px">
+<header style="display: flex; align-items: center; gap: 12px">
+<h1 style="margin: 0; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 30px; font-weight: 700">Postfach</h1>
+<sc-if value="{{hasNew}}" hint-placeholder-val="{{ true }}">
+<div style="height: 26px; padding: 0 10px; box-sizing: border-box; border-radius: 13px; background: #C62828; color: #FFFFFF; display: flex; align-items: center; font-size: 13px; font-weight: 700">{{newCount}} neu</div>
+</sc-if>
+</header>
+
+<sc-if value="{{hasItems}}" hint-placeholder-val="{{ true }}">
+<section style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #5C5C5C">Runden bestätigen</h2>
+<sc-for list="{{items}}" as="it" hint-placeholder-count="2">
+<div style="{{it.cardStyle}}">
+<div style="display: flex; gap: 12px">
+<div style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 20px; background: #D6D6D1; color: #111111; display: flex; align-items: center; justify-content: center; font-weight: 700">M</div>
+<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<div style="font-size: 15px; font-weight: 700">{{it.who}} hat eure Runde eingetragen</div>
+<div style="font-size: 14px; line-height: 1.45; color: #333333">{{it.text}}</div>
+</div>
+</div>
+<sc-if value="{{it.open}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px">
+<button onClick="{{it.reject}}" style="flex-grow: 1; min-height: 44px; border-radius: 12px; border: 1px solid #D6D6D1; background: #FFFFFF; color: #B42318; font-size: 14px; font-weight: 700; cursor: pointer">Ablehnen</button>
+<button onClick="{{it.confirm}}" style="flex-grow: 1; min-height: 44px; border-radius: 12px; border: none; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">Bestätigen</button>
+</div>
+</sc-if>
+<sc-if value="{{it.confirmed}}" hint-placeholder-val="{{ false }}">
+<a href="11-duell-bilanz.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 40px; font-size: 14px; font-weight: 600; color: #111111">Bestätigt, zählt in eurer Bilanz <span style="font-weight: 700">Bilanz ansehen</span></a>
+</sc-if>
+<sc-if value="{{it.rejected}}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 40px; display: flex; align-items: center; font-size: 14px; font-weight: 600; color: #B42318">Abgelehnt, {{it.who}} kann die Runde korrigieren</div>
+</sc-if>
+</div>
+</sc-for>
+</section>
+</sc-if>
+
+<section style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #5C5C5C">Neuigkeiten</h2>
+<sc-if value="{{hasUnread}}" hint-placeholder-val="{{ true }}">
+<button onClick="{{markAll}}" style="min-height: 40px; padding: 0 4px; border: none; background: transparent; color: #111111; font-size: 13px; font-weight: 700; cursor: pointer">Alle gelesen</button>
+</sc-if>
+</div>
+<div class="nf-scroll" style="display: flex; gap: 8px; overflow-x: auto">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+<button onClick="{{c.pick}}" aria-pressed="{{c.active}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+<sc-for list="{{feed}}" as="f" hint-placeholder-count="5">
+<a href="{{f.href}}" style="{{f.rowStyle}}">
+<div style="{{f.iconStyle}}">
+<sc-if value="{{f.isFriend}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg></sc-if>
+<sc-if value="{{f.isForum}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"></path></svg></sc-if>
+<sc-if value="{{f.isCourse}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"></path><path d="M6 4l11 4-11 4"></path></svg></sc-if>
+</div>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0">
+<div style="font-size: 11px; font-weight: 700; letter-spacing: 0.8px; color: #5C5C5C">{{f.tag}}</div>
+<div style="{{f.titleStyle}}">{{f.title}}</div>
+<div style="font-size: 13px; line-height: 1.4; color: #5C5C5C">{{f.body}}</div>
+</div>
+<sc-if value="{{f.unread}}" hint-placeholder-val="{{ true }}">
+<span aria-label="ungelesen" style="flex-shrink: 0; width: 10px; height: 10px; margin-top: 6px; border-radius: 5px; background: #C62828"></span>
+</sc-if>
+</a>
+</sc-for>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filter: 'all',
+      items: [
+        { who: '[Freund]', text: 'Matchplay auf [Golfclub] am [Datum]: [Freund] gewinnt 3&2.', status: 'open' },
+        { who: '[Freund 2]', text: 'Stableford auf [Golfclub] am [Datum]: Remis, 34 : 34 Punkte.', status: 'open' }
+      ],
+      feed: [
+        { type: 'friend', title: '[Freund] hat dir geschrieben', body: '[Vorschau der Nachricht]', href: '07-mitgliedsprofil.html', unread: true },
+        { type: 'forum', title: '[Freund] hat im Forum geschrieben', body: 'In „Mobility vor der Runde: Was macht ihr in 10 Minuten?"', href: '06-diskussion.html', unread: true },
+        { type: 'forum', title: 'Neue Antwort auf deinen Beitrag', body: '[Mitglied] in „Lohnt sich ein Fitting schon bei Handicap 30?"', href: '06-diskussion.html', unread: true },
+        { type: 'course', title: 'Neue Bewertung für [Heimatclub]', body: '[Mitglied] vergibt 4 von 5 Sternen. Neuer Schnitt: [Wert]', href: '10-golfplatz-detail.html', unread: true },
+        { type: 'course', title: 'Neue Diskussion zu [Heimatclub]', body: '„[Titel der Diskussion]" in Golfplätze', href: '06-diskussion.html', unread: false },
+        { type: 'course', title: '[Freund] spielt ein Turnier auf [Heimatclub]', body: '[Turniername] am [Datum]', href: '07-mitgliedsprofil.html', unread: false }
+      ]
+    };
+  }
+  renderVals() {
+    var self = this;
+    var setItem = function (i, s) {
+      self.setState({ items: self.state.items.map(function (x, j) { return j === i ? Object.assign({}, x, { status: s }) : x; }) });
+    };
+    var items = this.state.items.map(function (x, i) {
+      var open = x.status === 'open';
+      return {
+        who: x.who, text: x.text, open: open, confirmed: x.status === 'confirmed', rejected: x.status === 'rejected',
+        cardStyle: 'display: flex; flex-direction: column; gap: 12px; padding: 16px; background: #FFFFFF; border-radius: 16px; ' +
+          (open ? 'border: 1.5px solid #C62828' : 'border: 1px solid #E4E4E0'),
+        confirm: function () { setItem(i, 'confirmed'); },
+        reject: function () { setItem(i, 'rejected'); }
+      };
+    });
+    var tags = { friend: 'FREUNDE', forum: 'FORUM', course: 'MEIN PLATZ' };
+    var icon = {
+      friend: 'background: #EEF3DC; color: #111111',
+      forum: 'background: #EDEDEA; color: #111111',
+      course: 'background: #FDE7E4; color: #B42318'
+    };
+    var filter = this.state.filter;
+    var feed = this.state.feed.filter(function (f) { return filter === 'all' || f.type === filter; }).map(function (f) {
+      return {
+        tag: tags[f.type], title: f.title, body: f.body, href: f.href, unread: f.unread,
+        isFriend: f.type === 'friend', isForum: f.type === 'forum', isCourse: f.type === 'course',
+        rowStyle: 'display: flex; gap: 12px; align-items: flex-start; padding: 14px; border-radius: 16px; ' +
+          (f.unread ? 'background: #FFFFFF; border: 1px solid #E4E4E0' : 'background: transparent; border: 1px solid #E4E4E0'),
+        iconStyle: 'flex-shrink: 0; width: 38px; height: 38px; border-radius: 19px; display: flex; align-items: center; justify-content: center; ' + icon[f.type],
+        titleStyle: 'font-size: 15px; line-height: 1.3; ' + (f.unread ? 'font-weight: 700' : 'font-weight: 500')
+      };
+    });
+    var counts = { all: 0, friend: 0, forum: 0, course: 0 };
+    this.state.feed.forEach(function (f) { if (f.unread) { counts.all++; counts[f.type]++; } });
+    var chips = [
+      { id: 'all', label: 'Alle' }, { id: 'friend', label: 'Freunde' },
+      { id: 'forum', label: 'Forum' }, { id: 'course', label: 'Mein Platz' }
+    ].map(function (c) {
+      var on = c.id === filter;
+      var n = counts[c.id];
+      return {
+        label: n ? c.label + ' · ' + n : c.label, active: on ? 'true' : 'false',
+        style: 'flex-shrink: 0; min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; ' +
+          (on ? 'background: #111111; color: #FFFFFF; border: 1px solid #111111' : 'background: #FFFFFF; color: #111111; border: 1px solid #D6D6D1'),
+        pick: function () { self.setState({ filter: c.id }); }
+      };
+    });
+    var openCount = this.state.items.filter(function (x) { return x.status === 'open'; }).length;
+    var newCount = openCount + counts.all;
+    return {
+      items: items, hasItems: this.state.items.length > 0,
+      feed: feed, chips: chips,
+      newCount: newCount, hasNew: newCount > 0, hasUnread: counts.all > 0,
+      markAll: function () { self.setState({ feed: self.state.feed.map(function (f) { return Object.assign({}, f, { unread: false }); }) }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

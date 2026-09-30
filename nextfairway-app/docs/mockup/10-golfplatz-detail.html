@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>NextFairway App · Golfplatz</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<style>
+h2{text-transform:uppercase}
+body{margin:0;background:#EDEDEA;font-family:'Barlow',system-ui,sans-serif;color:#111111}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.nf-scroll{scrollbar-width:none}.nf-scroll::-webkit-scrollbar{display:none}
+button,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #F5F5F2; overflow: hidden; font-family: 'Barlow', system-ui, sans-serif; color: #111111">
+
+<div style="flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 48px 12px 4px">
+<a href="09-golfplaetze.html" aria-label="Zurück zu den Golfplätzen" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<div style="font-size: 15px; font-weight: 700">Golfplätze</div>
+</div>
+
+<div class="nf-scroll" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding: 4px 20px 32px">
+
+<div class="nf-scroll" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -20px; padding: 0 20px">
+<div style="flex-shrink: 0; width: 260px; height: 170px; border-radius: 16px; background: #DDE6BF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #111111">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-9 9"></path></svg>
+<div style="font-size: 13px; font-weight: 600">Foto vom Platz</div></div>
+<div style="flex-shrink: 0; width: 260px; height: 170px; border-radius: 16px; background: #CFDCA8; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #111111">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-9 9"></path></svg>
+<div style="font-size: 13px; font-weight: 600">Foto vom Platz</div></div>
+<button style="flex-shrink: 0; width: 120px; height: 170px; border-radius: 16px; border: 1.5px dashed #A0A0A0; background: transparent; color: #111111; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Foto hinzufügen</button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="align-self: flex-start; display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: #111111; color: #FFFFFF; font-size: 12px; font-weight: 700">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>Von NextFairway geprüft</div>
+<h1 style="margin: 0; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 26px; font-weight: 700">[Golfclub-Name]</h1>
+<div style="font-size: 14px; color: #5C5C5C">[Ort], [Region] · eingetragen von <a href="07-mitgliedsprofil.html" style="text-decoration: underline; text-underline-offset: 3px">[Mitglied]</a></div>
+</div>
+
+<section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; background: #FFFFFF; border-radius: 14px; border: 1px solid #E4E4E0"><div style="font-size: 12px; font-weight: 700; color: #5C5C5C">LÖCHER · PAR</div><div style="font-size: 17px; font-weight: 700">18 · [Par]</div></div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; background: #FFFFFF; border-radius: 14px; border: 1px solid #E4E4E0"><div style="font-size: 12px; font-weight: 700; color: #5C5C5C">LÄNGE</div><div style="font-size: 17px; font-weight: 700">[Länge] m</div></div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; background: #FFFFFF; border-radius: 14px; border: 1px solid #E4E4E0"><div style="font-size: 12px; font-weight: 700; color: #5C5C5C">GREENFEE WOCHE</div><div style="font-size: 17px; font-weight: 700">[Betrag] €</div></div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; background: #FFFFFF; border-radius: 14px; border: 1px solid #E4E4E0"><div style="font-size: 12px; font-weight: 700; color: #5C5C5C">GREENFEE WOCHENENDE</div><div style="font-size: 17px; font-weight: 700">[Betrag] €</div></div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 8px">
+<a href="https://www.golf.de" style="min-height: 48px; border-radius: 14px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M19 8v6M22 11h-6"></path></svg>Mitgliedschaften</a>
+<div style="display: flex; gap: 8px">
+<a href="https://www.golf.de" style="flex-grow: 1; min-height: 48px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D6D6D1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>Scorecard</a>
+<a href="https://www.golf.de" style="flex-grow: 1; min-height: 48px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D6D6D1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M20 4l-9 9"></path><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg>Website</a>
+</div>
+<button style="min-height: 44px; border: none; background: transparent; color: #111111; font-size: 14px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer">Angaben ergänzen oder korrigieren</button>
+</section>
+
+<section style="display: flex; gap: 18px; align-items: center; padding: 18px; background: #FFFFFF; border-radius: 18px; border: 1px solid #E4E4E0">
+<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 104px">
+<div style="font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 44px; font-weight: 700; line-height: 1">{{avgText}}</div>
+<div style="display: flex; gap: 1px">
+<sc-for list="{{avgStars}}" as="s" hint-placeholder-count="5">
+<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="{{s.fill}}" stroke="#A0741A" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</sc-for>
+</div>
+<div style="font-size: 12px; color: #5C5C5C">{{countText}}</div>
+</div>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #5C5C5C">
+<span style="width: 10px">{{b.label}}</span>
+<div style="flex-grow: 1; height: 8px; border-radius: 4px; background: #EDEDEA; overflow: hidden"><div style="{{b.fillStyle}}"></div></div>
+<span style="width: 20px; text-align: right">{{b.count}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 12px; padding: 18px; background: #FFFFFF; border-radius: 18px; border: 1px solid #E4E4E0">
+<h2 style="margin: 0; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 19px; font-weight: 700">Wie fandest du den Platz?</h2>
+<div role="group" aria-label="Deine Bewertung" style="display: flex; gap: 4px">
+<sc-for list="{{inputStars}}" as="s" hint-placeholder-count="5">
+<button onClick="{{s.pick}}" aria-label="{{s.aria}}" aria-pressed="{{s.pressed}}" style="width: 48px; height: 48px; border: none; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="36" height="36" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="{{s.fill}}" stroke="#A0741A" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+</button>
+</sc-for>
+</div>
+<div style="font-size: 14px; font-weight: 600; color: #111111">{{myLabel}}</div>
+<label for="nf-review" style="font-size: 13px; font-weight: 700; color: #5C5C5C">Kommentar (optional)</label>
+<textarea id="nf-review" rows="3" placeholder="Zustand der Grüns, Schwierigkeit, Clubhaus …" style="border-radius: 12px; border: 1px solid #D6D6D1; background: #F5F5F2; padding: 12px; font-size: 15px; color: #111111; resize: none; outline-color: #111111"></textarea>
+<button onClick="{{submit}}" style="{{submitStyle}}">{{submitLabel}}</button>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Archivo Black', 'Arial Black', sans-serif; letter-spacing: -0.2px; font-size: 19px; font-weight: 700">Bewertungen</h2>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E4E0">
+<div style="display: flex; justify-content: space-between; font-size: 13px; color: #5C5C5C"><a href="07-mitgliedsprofil.html" style="font-weight: 600; color: #111111">[Mitglied] · HCP [Wert]</a><span>[Sterne] · [Datum]</span></div>
+<div style="font-size: 15px; line-height: 1.5">[Beispielbewertung aus der Community]</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E4E0">
+<div style="display: flex; justify-content: space-between; font-size: 13px; color: #5C5C5C"><a href="07-mitgliedsprofil.html" style="font-weight: 600; color: #111111">[Mitglied] · HCP [Wert]</a><span>[Sterne] · [Datum]</span></div>
+<div style="font-size: 15px; line-height: 1.5">[Beispielbewertung aus der Community]</div>
+</div>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5E17EB","options":["#5E17EB","#111111"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { base: [0, 1, 3, 7, 12], mine: 0, submitted: false };
+  }
+  renderVals() {
+    var self = this;
+    var r = this.state.base.slice();
+    if (this.state.submitted && this.state.mine) r[this.state.mine - 1] += 1;
+    var n = 0, sum = 0, max = 0;
+    for (var i = 0; i < 5; i++) { n += r[i]; sum += r[i] * (i + 1); if (r[i] > max) max = r[i]; }
+    var avg = n ? sum / n : 0;
+    var rounded = Math.round(avg);
+    var avgStars = [1, 2, 3, 4, 5].map(function (k) { return { fill: k <= rounded ? '#D9A62B' : 'none' }; });
+    var bars = [5, 4, 3, 2, 1].map(function (k) {
+      var c = r[k - 1];
+      var pct = max ? Math.round(c / max * 100) : 0;
+      return { label: String(k), count: c, fillStyle: 'height: 100%; width: ' + pct + '%; background: #D9A62B; border-radius: 4px' };
+    });
+    var mine = this.state.mine;
+    var names = ['', 'Enttäuschend', 'Geht so', 'Solide', 'Sehr gut', 'Top-Platz'];
+    var inputStars = [1, 2, 3, 4, 5].map(function (k) {
+      return {
+        aria: k + (k === 1 ? ' Stern' : ' Sterne'),
+        pressed: k === mine ? 'true' : 'false',
+        fill: k <= mine ? '#D9A62B' : 'none',
+        pick: function () { if (!self.state.submitted) self.setState({ mine: k }); }
+      };
+    });
+    var done = this.state.submitted;
+    var ready = mine > 0 && !done;
+    return {
+      accent: this.props.accent ?? '#5E17EB',
+      avgText: n ? avg.toFixed(1).replace('.', ',') : '–',
+      countText: n + (n === 1 ? ' Bewertung' : ' Bewertungen'),
+      avgStars: avgStars, bars: bars, inputStars: inputStars,
+      myLabel: done ? 'Danke! Deine Bewertung zählt jetzt im Durchschnitt mit.' : (mine ? mine + ' von 5 Sternen: ' + names[mine] : 'Tippe auf die Sterne, um zu bewerten'),
+      submitLabel: done ? 'Bewertung gespeichert' : 'Bewertung abschicken',
+      submitStyle: 'min-height: 48px; border-radius: 14px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; ' +
+        (ready ? 'background: ' + (this.props.accent ?? '#5E17EB') + '; color: #FFFFFF' : 'background: #EDEDEA; color: #5C5C5C'),
+      submit: function () { if (self.state.mine && !self.state.submitted) self.setState({ submitted: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
