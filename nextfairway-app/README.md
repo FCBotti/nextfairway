@@ -28,3 +28,10 @@ Dieses Paket enthält alles, was Claude Code für den Start braucht.
 ## Mockup ansehen
 
 `docs/mockup/02-start.html` im Browser öffnen. Die Screens sind untereinander verlinkt und in Teilen klickbar (Filter, Formulare, Bestätigungen).
+
+## Entwicklung
+
+- `npm install` – Pakete installieren
+- `npx expo start` – Dev-Server; mit Expo Go auf dem Handy den QR-Code scannen (im Codespace: `npx expo start --tunnel`)
+- `npx expo start --web` – schnelle Ansicht im Browser
+- `npm run typecheck` und `npm run lint` – vor jedem Commit
